@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+from datetime import date as Date
 from enum import Enum
 from typing import Any
 
@@ -43,7 +43,7 @@ class MEDDPICC(BaseModel):
 
 
 class Interaction(BaseModel):
-    date: date | None = None
+    date: Date | None = None
     type: str
     summary: str
     commitments: list[str] = Field(default_factory=list)
@@ -60,7 +60,7 @@ class Account(BaseModel):
 class Opportunity(BaseModel):
     stage: str = "target"
     amount: float | None = None
-    target_close_date: date | None = None
+    target_close_date: Date | None = None
     buyer_outcomes: list[str] = Field(default_factory=list)
     risks: list[str] = Field(default_factory=list)
     next_actions: list[str] = Field(default_factory=list)
