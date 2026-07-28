@@ -28,8 +28,21 @@ class ContextStore:
 
     def save(self, context: SalesContext) -> Path:
         path = self.path_for(context.account.name)
-        path.write_text(
-            json.dumps(context.model_dump(mode="json"), indent=2),
-            encoding="utf-8",
-        )
+        path.write_text(json.dumps(context.model_dump(mode="json"), indent=2), encoding="utf-8")
         return path
+
+    def list_contexts(self) -> list[SalesContext]:
+        contexts: list[SalesContext] = []
+        for path in sorted(self.root.glob("*.json")):
+            try:
+                contexts.append(SalesContext.model_validate_json(path.read_text(encoding="utf-8")))
+            except Exception:
+                continue
+        return contexts
+
+    def delete(self, account_name: str) -> bool:
+        path = self.path_for(account_name)
+        if not path.exists():
+            return False
+        path.unlink()
+        return True
