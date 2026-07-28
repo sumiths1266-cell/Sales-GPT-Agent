@@ -31,6 +31,13 @@ def test_research_enables_web_search():
     assert llm.calls[0]["web_search"] is True
 
 
+def test_competitive_enables_web_search():
+    llm = FakeLLM()
+    orchestrator = SalesOrchestrator(llm=llm, skills=FakeSkills())
+    orchestrator.run("competitive", SalesContext(account=Account(name="Acme")), "Compare Pi with Yellow.ai")
+    assert llm.calls[0]["web_search"] is True
+
+
 def test_deal_review_does_not_enable_web_search():
     llm = FakeLLM()
     orchestrator = SalesOrchestrator(llm=llm, skills=FakeSkills())
