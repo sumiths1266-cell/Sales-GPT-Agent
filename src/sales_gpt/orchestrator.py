@@ -9,14 +9,16 @@ from .skills import SkillLibrary
 
 
 PI = "skills/pi/pi-selling.md"
+INDUSTRY = "skills/pi/industry-playbook.md"
 WORKFLOWS = {
-    "research": [PI, "agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/icp-scoring.md", "skills/sdr/trigger-detection.md"],
-    "prospect": [PI, "agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/trigger-detection.md", "skills/sdr/outreach.md", "skills/shared/next-best-action.md"],
-    "meeting-prep": [PI, "agents/sdr.md", "skills/sdr/meeting-prep.md", "skills/ae/discovery.md"],
-    "transcript": [PI, "agents/account-executive.md", "skills/shared/transcript-analysis.md", "skills/ae/meddpicc.md", "skills/ae/stakeholder-mapping.md"],
+    "research": [PI, INDUSTRY, "agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/icp-scoring.md", "skills/sdr/trigger-detection.md"],
+    "prospect": [PI, INDUSTRY, "agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/trigger-detection.md", "skills/sdr/outreach.md", "skills/shared/next-best-action.md"],
+    "meeting-prep": [PI, INDUSTRY, "agents/sdr.md", "skills/sdr/meeting-prep.md", "skills/ae/discovery.md"],
+    "transcript": [PI, INDUSTRY, "agents/account-executive.md", "skills/shared/transcript-analysis.md", "skills/ae/meddpicc.md", "skills/ae/stakeholder-mapping.md"],
     "follow-up": [PI, "agents/account-executive.md", "skills/shared/follow-up.md", "skills/shared/next-best-action.md"],
-    "deal-review": [PI, "agents/sales-manager.md", "skills/ae/meddpicc.md", "skills/ae/deal-risk.md", "skills/ae/forecasting.md", "skills/shared/next-best-action.md"],
-    "competitive": [PI, "skills/pi/competitive-battlecard.md", "skills/ae/competitive-strategy.md", "skills/shared/next-best-action.md"],
+    "deal-review": [PI, INDUSTRY, "agents/sales-manager.md", "skills/ae/meddpicc.md", "skills/ae/deal-risk.md", "skills/ae/forecasting.md", "skills/shared/next-best-action.md"],
+    "competitive": [PI, INDUSTRY, "skills/pi/competitive-battlecard.md", "skills/ae/competitive-strategy.md", "skills/shared/next-best-action.md"],
+    "industry": [PI, INDUSTRY, "agents/sdr.md", "skills/sdr/account-research.md", "skills/ae/discovery.md", "skills/shared/next-best-action.md"],
 }
 
 
@@ -40,5 +42,5 @@ class SalesOrchestrator:
             instructions=instructions,
             user_input=json.dumps(payload, indent=2),
             schema=WorkflowResult,
-            web_search=workflow in {"research", "prospect", "competitive"},
+            web_search=workflow in {"research", "prospect", "competitive", "industry"},
         )
