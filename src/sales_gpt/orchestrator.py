@@ -8,13 +8,14 @@ from .results import WorkflowResult
 from .skills import SkillLibrary
 
 
+PI = "skills/pi/pi-selling.md"
 WORKFLOWS = {
-    "research": ["agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/icp-scoring.md", "skills/sdr/trigger-detection.md"],
-    "prospect": ["agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/trigger-detection.md", "skills/sdr/outreach.md", "skills/shared/next-best-action.md"],
-    "meeting-prep": ["agents/sdr.md", "skills/sdr/meeting-prep.md", "skills/ae/discovery.md"],
-    "transcript": ["agents/account-executive.md", "skills/shared/transcript-analysis.md", "skills/ae/meddpicc.md", "skills/ae/stakeholder-mapping.md"],
-    "follow-up": ["agents/account-executive.md", "skills/shared/follow-up.md", "skills/shared/next-best-action.md"],
-    "deal-review": ["agents/sales-manager.md", "skills/ae/meddpicc.md", "skills/ae/deal-risk.md", "skills/ae/forecasting.md", "skills/shared/next-best-action.md"],
+    "research": [PI, "agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/icp-scoring.md", "skills/sdr/trigger-detection.md"],
+    "prospect": [PI, "agents/sdr.md", "skills/sdr/account-research.md", "skills/sdr/trigger-detection.md", "skills/sdr/outreach.md", "skills/shared/next-best-action.md"],
+    "meeting-prep": [PI, "agents/sdr.md", "skills/sdr/meeting-prep.md", "skills/ae/discovery.md"],
+    "transcript": [PI, "agents/account-executive.md", "skills/shared/transcript-analysis.md", "skills/ae/meddpicc.md", "skills/ae/stakeholder-mapping.md"],
+    "follow-up": [PI, "agents/account-executive.md", "skills/shared/follow-up.md", "skills/shared/next-best-action.md"],
+    "deal-review": [PI, "agents/sales-manager.md", "skills/ae/meddpicc.md", "skills/ae/deal-risk.md", "skills/ae/forecasting.md", "skills/shared/next-best-action.md"],
 }
 
 
@@ -28,10 +29,10 @@ class SalesOrchestrator:
             raise ValueError(f"Unknown workflow: {workflow}")
         playbook = self.skills.combine(*WORKFLOWS[workflow])
         instructions = (
-            "You are Sales GPT Agent. Follow the supplied sales playbook. "
-            "Never invent evidence. Clearly distinguish confirmed facts, hypotheses, and unknowns. "
+            "You are Sales GPT Agent, supporting an enterprise seller of Pi by Paytm. Follow the supplied sales playbook. "
+            "Never invent evidence or Pi claims. Clearly distinguish confirmed facts, public facts, seller-provided facts, hypotheses, and unknowns. "
             "Return structured updates only when supported by evidence. Preserve existing context unless new evidence improves it. "
-            "The seller_response must be a concise, useful answer for the seller and end with prioritized next actions.\n\n" + playbook
+            "Sell business outcomes before product capabilities. The seller_response must be concise, useful, and end with prioritized next actions.\n\n" + playbook
         )
         payload = {"workflow": workflow, "sales_context": context.model_dump(mode="json"), "seller_request": request}
         return self.llm.run_structured(
