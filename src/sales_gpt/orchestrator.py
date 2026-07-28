@@ -16,6 +16,7 @@ WORKFLOWS = {
     "transcript": [PI, "agents/account-executive.md", "skills/shared/transcript-analysis.md", "skills/ae/meddpicc.md", "skills/ae/stakeholder-mapping.md"],
     "follow-up": [PI, "agents/account-executive.md", "skills/shared/follow-up.md", "skills/shared/next-best-action.md"],
     "deal-review": [PI, "agents/sales-manager.md", "skills/ae/meddpicc.md", "skills/ae/deal-risk.md", "skills/ae/forecasting.md", "skills/shared/next-best-action.md"],
+    "competitive": [PI, "skills/pi/competitive-battlecard.md", "skills/ae/competitive-strategy.md", "skills/shared/next-best-action.md"],
 }
 
 
@@ -39,5 +40,5 @@ class SalesOrchestrator:
             instructions=instructions,
             user_input=json.dumps(payload, indent=2),
             schema=WorkflowResult,
-            web_search=workflow in {"research", "prospect"},
+            web_search=workflow in {"research", "prospect", "competitive"},
         )
