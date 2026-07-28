@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SalesContext",
+  "type": "object",
+  "properties": {
+    "account": {"type": "object", "properties": {"name": {"type": "string"}, "industry": {"type": "string"}, "website": {"type": "string"}, "icp_score": {"type": "number"}, "signals": {"type": "array", "items": {"type": "string"}}}},
+    "stakeholders": {"type": "array", "items": {"type": "object", "properties": {"name": {"type": "string"}, "title": {"type": "string"}, "role": {"type": "string"}, "influence": {"type": "string"}, "stance": {"type": "string"}, "evidence": {"type": "array", "items": {"type": "string"}}}}},
+    "opportunity": {"type": "object", "properties": {"stage": {"type": "string"}, "amount": {"type": "number"}, "target_close_date": {"type": "string"}, "buyer_outcomes": {"type": "array", "items": {"type": "string"}}, "risks": {"type": "array", "items": {"type": "string"}}, "next_actions": {"type": "array", "items": {"type": "string"}}}},
+    "meddpicc": {"type": "object", "properties": {"metrics": {"$ref": "#/$defs/evidenceField"}, "economic_buyer": {"$ref": "#/$defs/evidenceField"}, "decision_criteria": {"$ref": "#/$defs/evidenceField"}, "decision_process": {"$ref": "#/$defs/evidenceField"}, "paper_process": {"$ref": "#/$defs/evidenceField"}, "identified_pain": {"$ref": "#/$defs/evidenceField"}, "champion": {"$ref": "#/$defs/evidenceField"}, "competition": {"$ref": "#/$defs/evidenceField"}}},
+    "interactions": {"type": "array", "items": {"type": "object", "properties": {"date": {"type": "string"}, "type": {"type": "string"}, "summary": {"type": "string"}, "commitments": {"type": "array", "items": {"type": "string"}}}}},
+    "unknowns": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {"evidenceField": {"type": "object", "properties": {"status": {"enum": ["unknown", "hypothesis", "partial", "confirmed"]}, "value": {}, "evidence": {"type": "array", "items": {"type": "string"}}, "next_question": {"type": "string"}}, "required": ["status"]}}
+}
