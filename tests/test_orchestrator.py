@@ -20,15 +20,31 @@ class FakeLLM:
 
 
 class FakeSkills:
+    def __init__(self):
+        self.paths = []
+
     def combine(self, *paths):
+        self.paths = list(paths)
         return "PLAYBOOK:" + ",".join(paths)
 
 
-def test_research_enables_web_search():
+def test_research_enables_web_search_and_full_dossier():
     llm = FakeLLM()
-    orchestrator = SalesOrchestrator(llm=llm, skills=FakeSkills())
+    skills = FakeSkills()
+    orchestrator = SalesOrchestrator(llm=llm, skills=skills)
     orchestrator.run("research", SalesContext(account=Account(name="Acme")), "Research Acme")
     assert llm.calls[0]["web_search"] is True
+    assert "skills/sdr/full-account-dossier.md" in skills.paths
+    assert "actual named prospects" in llm.calls[0]["instructions"]
+
+
+def test_prospect_uses_full_dossier():
+    llm = FakeLLM()
+    skills = FakeSkills()
+    orchestrator = SalesOrchestrator(llm=llm, skills=skills)
+    orchestrator.run("prospect", SalesContext(account=Account(name="Acme")), "Find buyers")
+    assert llm.calls[0]["web_search"] is True
+    assert "skills/sdr/full-account-dossier.md" in skills.paths
 
 
 def test_competitive_enables_web_search():
